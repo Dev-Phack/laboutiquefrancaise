@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Comtpe - La Boutique Française{% endblock %}
+
+{% block content %}
+    <h1><center>Mon compte</center></h1>
+    Bienvenue {{ app.user.firstname }}
+    <hr>
+    <ol>
+        <li><a href="{{ path('account_password') }}">Modifier mon mot de passe</a></li>
+        <li><a href="{{ path('account_address') }}">Ajouter mes adresses</a></li>
+        <li>Mes commandes</li>
+    </ol>
+{% endblock %}

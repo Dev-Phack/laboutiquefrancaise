@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Récapitulatif - La Boutique Française{% endblock %}
+
+{% block content %}
+    <h2>Mon Récapitulatif</h2>
+    <p>Examinez vos dernières informations avant de passer au paiement</p>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <strong>Adresse de livraison</strong><br><br>
+            <div>{{ address|raw }}</div><br>
+            <strong>Mon transporteur</strong>
+            <hr>
+                {{ carrier.name }}<br>
+                {{ carrier.description }}<br>
+                {{ carrier.price|number_format() }} FCFA
+        </div>
+        <div class="col-md-6">
+            <h5 class="text-center">Ma commande</h5>
+            {% set total = null %}
+            {% for product in cart %}
+                <div class="row">
+                    <div class="col-2">
+                        <img src="/uploads/{{ product.product.illustration }}" alt="{{ product.product.name }}" class="tof-cart">
+                    </div>
+                    <div class="col-8 my-auto">
+                        {{ product.product.name }}
+                        <br>
+                        <small>
+                            {{ product.product.subtitle }}
+                            <br>x {{ product.quantity }}
+                        </small>
+                    </div>
+                    <div class="col-2">
+                        {{ (product.product.price / 100)|number_format() }} FCFA
+                    </div>
+                </div>
+                <hr class="w-auto">
+                {% set total = total + ((product.product.price / 100)*(product.quantity)) %}
+            {% endfor %}
+            <strong>Sous-Total: </strong>{{ total|number_format() }} FCFA<br>
+            <strong>Frais de livraison: </strong>{{carrier.price|number_format() }} FCFA
+            <hr>
+            <strong>Total: </strong>{{ (total + carrier.price)|number_format() }} FCFA
+
+            <a href="" class="btn btn-success btn-block">Payer {{ (total + carrier.price)|number_format() }} FCFA</a>
+        </div>
+    </div>
+{% endblock %}
